@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="nivel">Simon dice!</h1>
+    <button onclick="simonDice()">Agreagar Jugada</button><br><br>
+    <div id="rojo" onclick="leerJugada(3)"></div>
+    <div id="azul" onclick="leerJugada(2)"></div>
+    <br>
+    <div id="amarillo" onclick="leerJugada(1)"></div>
+    <div id="verde" onclick="leerJugada(0)"></div>
+
+    <script>
+        document.getElementById('rojo').style.height = '100px'
+        document.getElementById('rojo').style.width = '100px'
+        document.getElementById('rojo').style.background = 'rgb(256,0,0)'
+        document.getElementById('rojo').style.display = 'inline-block'
+
+        document.getElementById('azul').style.height = '100px'
+        document.getElementById('azul').style.width = '100px'
+        document.getElementById('azul').style.background = 'rgb(0,0,256)'
+        document.getElementById('azul').style.display = 'inline-block'
+
+        document.getElementById('amarillo').style.height = '100px'
+        document.getElementById('amarillo').style.width = '100px'
+        document.getElementById('amarillo').style.background = 'rgb(256,256,0)'
+        document.getElementById('amarillo').style.display = 'inline-block'
+
+        document.getElementById('verde').style.height = '100px'
+        document.getElementById('verde').style.width = '100px'
+        document.getElementById('verde').style.background = 'rgb(0,256,0)'
+        document.getElementById('verde').style.display = 'inline-block'
+
+    </script>
+    <script>
+        rojo = document.getElementById('rojo')
+        rojoNormal = 'rgb(256,0,0)'
+        rojoResaltado = 'rgb(180,0,0)'
+        verde = document.getElementById('verde')
+        verdeNormal = 'rgb(0,256,0)'
+        verdeResaltado = 'rgb(0,180,0)'
+        azul = document.getElementById('azul')
+        azulNormal = 'rgb(0,0,256)'
+        azulResaltado = 'rgb(0,0,180)'
+        amarillo = document.getElementById('amarillo')
+        amarilloNormal = 'rgb(256,256,0)'
+        amarilloResaltado = 'rgb(180,180,0)'
+        //rojo.style.background = rojoResaltado
+        
+        posiblesJugadas = ['verde','amarillo','azul','rojo']
+        secuencia = []
+        secuenciaJugador = []
+        nivel = 0
+        
+        function simonDice(){
+            nivel++
+            document.getElementById('nivel').innerHTML = 'Simon dice! - Nivel '+nivel
+            secuenciaJugador = []
+            secuencia.push( getPosibleJugada() )
+            mostrarSecuencia()
+            console.log(secuencia)
+        }
+
+        function mostrarSecuencia(){
+            /*
+            secuencia.forEach(element => {
+                
+            });
+            */
+            var i = 0
+            let interval = setInterval( function() {
+                console.log('un ciclo del intervalo')
+
+                var colorActual = document.getElementById(secuencia[i])
+                rojo.style.background = rojoNormal
+                azul.style.background = azulNormal
+                verde.style.background = verdeNormal
+                amarillo.style.background = amarilloNormal
+                switch(secuencia[i]){
+                    case 'rojo':   
+                        colorActual.style.background = rojoResaltado
+                        break
+                    case 'azul':
+                        colorActual.style.background = azulResaltado
+                        break
+                    case 'verde':
+                        colorActual.style.background = verdeResaltado
+                        break
+                    case 'amarillo':
+                        colorActual.style.background = amarilloResaltado
+                        break
+                }
+               
+
+                i++
+                if ( secuencia.length < i ) {
+                    clearInterval(interval)
+                    rojo.style.background = rojoNormal
+                    azul.style.background = azulNormal
+                    verde.style.background = verdeNormal
+                    amarillo.style.background = amarilloNormal
+                }
+            } , 1000 )
+
+        }
+
+        function getPosibleJugada(){
+            return posiblesJugadas[Math.floor(Math.random() * 4)]
+        }
+
+        function leerJugada(posicion){
+            secuenciaJugador.push(posiblesJugadas[posicion])
+            console.log(secuencia)
+            if( secuenciaJugador[secuenciaJugador.length - 1] != secuencia[secuenciaJugador.length - 1]  ){
+                alert('Ya la regaste my hermano 😒')
+                secuencia = []
+            }
+            if(secuencia.length == secuenciaJugador.length){
+                simonDice()
+            }
+        }
+
+    </script>
+</body>
+</html>
